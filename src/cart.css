@@ -1,0 +1,167 @@
+body {
+	font-family: "Sarabun", sans-serif;
+}
+
+header {
+	background-color: darkgreen;
+	padding: 1cm;
+
+}
+
+.titlecart {
+	font-size: 25px;
+	text-align: center;
+	color: white;
+	font-family: "Sarabun", sans-serif;
+}
+
+.quantities {
+	padding: 10px 0;
+	font-family: "Sarabun", sans-serif;
+	font-weight: 0;
+	color: darkgreen;
+}
+
+.cart-container {
+	padding: 20px;
+	max-width: 800px;
+	margin: 0 auto;
+
+}
+
+.cart-items {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+
+
+}
+
+.cart-name {
+	font-weight: bold;
+	font-size: 17px;
+	padding: 10px 0px;
+}
+
+.totalprice {
+	color: red;
+}
+
+.cart-item {
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 20px;
+	background-color: #f9f9f9;
+	padding: 10px;
+	border-radius: 20px;
+}
+
+.cart-item-image {
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+	margin-right: 20px;
+	border-radius: 10px;
+}
+
+.cart-item-details {
+	flex-grow: 0.8;
+
+
+}
+
+.cart-item-controls {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+
+}
+
+.quantity-btn {
+	background-color: darkgreen;
+	border: none;
+	border-radius: 50px;
+	color: white;
+	padding: 5px 10px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.quantity {
+	font-size: 18px;
+	padding: 0 10px;
+
+}
+
+.remove-btn {
+	background-color: #dc3545;
+	border: none;
+	color: white;
+	padding: 5px 10px;
+	font-size: 15px;
+	cursor: pointer;
+	border-radius: 10px;
+
+}
+
+.remove-btn:hover,
+.quantity-btn:hover {
+	opacity: 0.8;
+}
+
+.cart-summary {
+	margin-top: 20px;
+	padding: 10px;
+	text-align: right;
+	font-size: 20px;
+	font-weight: bold;
+
+}
+
+.order-btn {
+	background-color: rgb(211, 158, 11);
+	border: none;
+	padding: 15px;
+	border-radius: 20px;
+	color: white;
+}
+
+.order-btn:hover {
+	background-color: rgb(248, 215, 139);
+	color: orange;
+}
+
+.take-home {
+	color: #dc3545;
+	font-weight: bold;
+}
+
+.eat-in {
+	color: darkgreen;
+	font-weight: bold;
+}
+
+.additionalnote {
+	color: gray;
+	font-size: 15px;
+}
+
+.view-ordered-btn {
+	background-color: #f9f9f9;
+	border: 1px solid darkgreen;
+	padding: 15px;
+	border-radius: 20px;
+	color: darkgreen;
+}
+
+.view-ordered-btn:hover {
+	background-color: rgb(39, 136, 70);
+	color: white;
+}
+
+.center {
+	padding: 20px;
+	display: flex;
+	justify-content: center;
+}

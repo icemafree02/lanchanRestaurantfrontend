@@ -1,0 +1,288 @@
+html {
+	font-family: sans-serif;
+}
+
+.headbar {
+	background-color: darkgreen;
+	padding-bottom: 10px;
+	border-radius: 20px;
+}
+
+.menubutton{
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	font-size: 10px;
+	color: white;
+
+}
+
+#tableInfo {
+	text-align: center;
+	font-family: sans-serif;
+	font-size: 20px;
+	padding-bottom: 1rem;
+	color: white;
+}
+
+.d-flex {
+	margin: 0 1cm;
+	padding-bottom: 10px;
+}
+
+#search {
+	color: white;
+}
+
+/* Media Queries */
+@media screen and (max-width: 450px) {
+	.d-flex {
+		margin: 0 1cm;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	#noodlebtn, #beveragebtn, #appetizerbtn, #othermenubtn, #allmenubtn{
+		font-size: 13px;
+	}
+}
+
+@media screen and (min-width: 700px) {
+	.d-flex {
+		margin: 0 3cm;
+	}
+}
+
+@media screen and (min-width: 800px) {
+	.d-flex {
+		margin: 0 4cm;
+	}
+}
+
+@media screen and (min-width: 900px) {
+	.d-flex {
+		margin: 0 5cm;
+	}
+}
+
+@media screen and (min-width: 1050px) {
+	.d-flex {
+		margin: 0 6cm;
+	}
+}
+
+@media screen and (min-width: 1150px) {
+	.d-flex {
+		margin: 0 8cm;
+	}
+}
+
+@media screen and (min-width: 1250px) {
+	.d-flex {
+		margin: 0 9cm;
+	}
+}
+
+@media screen and (min-width: 1300px) {
+	.d-flex {
+		margin: 0 10cm;
+	}
+}
+
+@media screen and (min-width: 1400px) {
+	.d-flex {
+		margin: 0 12cm;
+	}
+}
+
+@media screen and (min-width: 1500px) {
+	.d-flex {
+		margin: 0 13cm;
+	}
+}
+
+@media screen and (min-width: 1660px) {
+	.d-flex {
+		margin: 0 15cm;
+	}
+}
+
+#noodlebtn, #beveragebtn, #appetizerbtn, #othermenubtn ,#allmenubtn{
+	margin: 5px;
+	color: #f9f9f9;
+	display: flex;
+	flex-direction: column;
+}
+
+.picturelogo {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+}
+
+.picturelogo img {
+	max-width: 30%;
+}
+
+@media screen and (min-width: 800px) {
+	.picturelogo img {
+		max-width: 30%;
+	}
+}
+
+@media screen and (min-width: 1100px) {
+	.picturelogo img {
+		max-width: 25%;
+	}
+}
+
+@media screen and (min-width: 1300px) {
+	.picturelogo img {
+		max-width: 20%;
+	}
+}
+
+@media screen and (min-width: 1500px) {
+	.picturelogo img {
+		max-width: 15%;
+	}
+}
+
+.search-box {
+	display: flex;
+	font-family: monospace;
+}
+
+#search {
+	color: #f9f9f9;
+}
+
+.menu-picture {
+	border-radius: 10px;
+	max-width: 10%;
+	min-width: 80px;
+}
+
+.menu-item {
+	margin: 20px;
+	background-color: #f9f9f9;
+	border-radius: 20px;
+	font-family: sans-serif;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px;
+}
+
+.menu-name {
+	font-family: "Sarabun", sans-serif;
+	color: darkgreen;
+	font-size: 20px;
+	padding: 0 15px;
+}
+
+@media screen and (max-width: 700px) {
+	.menu-name {
+		font-size: 15px;
+	}
+}
+
+.menu-price {
+	font-family: "Sarabun", sans-serif;
+	color: darkgreen;
+	font-weight: 500;
+	font-size: 20px;
+	display: flex;
+	padding: 10px;
+}
+
+.cart {
+	background-color: darkgreen;
+	position: fixed;
+	z-index: 100;
+	bottom: 0;
+	padding: 10px;
+	display: flex;
+	right: 0;
+	border-radius: 50px;
+	margin: 1rem;
+}
+
+#cartpic {
+	max-width: 70px;
+	max-height: 70px;
+	border-radius: 50px;
+}
+
+.numberorder {
+	background-color: red;
+	position: fixed;
+	z-index: 100;
+	bottom: 70px;
+	display: flex;
+	right: 0;
+	padding: 0 10px;
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+	margin-bottom: 15px;
+	margin-right: 25px;
+	border-radius: 50px;
+}
+
+.testeiei {
+	background-color: #f9f9f9;
+	padding: 10px;
+	border-radius: 20px;
+	margin-top: 10px;
+}
+
+#menu-container, #noodle-container {
+	text-align: center;
+	font-family: "Sarabun", sans-serif;
+	color: darkgreen;
+	font-size: 20px;
+}
+
+.noodle-customization{
+	display: flex;
+	justify-content: space-between;
+	margin: 15px 10px;
+	border: 1px solid #b9b9c4;
+	border-radius: 20px;
+}
+
+.souptype, .noodletype, .size, .meat{
+	font-size: 13px;
+	margin: 10px;
+	display: flex;
+	flex-direction: column;
+	
+}
+.name{
+	font-size: 10px;
+	padding: 5px;
+	color: black;
+	
+}
+.label{
+	margin: 3px;	
+}
+#noodlesearchbtn{
+	font-size: 15px;
+	background-color: darkgreen;
+	border-radius: 20px;
+	color: white;
+	padding: 10px;
+
+}
+#noodlesearchbtn:hover {
+    background-color: rgb(39, 136, 70);
+  }
+.noodlesearch{
+	padding-bottom: 15px;
+}
+

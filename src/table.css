@@ -1,0 +1,127 @@
+body {
+  background-color: #f9f9f9;
+}
+
+.header {
+  background-color: darkgreen;
+  text-align: center;
+  font-family: "Sarabun", sans-serif;
+  color: #f9f9f9;
+  border-radius: 20px;
+  overflow: none;
+}
+
+.picturelogo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.picturelogo img {
+  max-width: 30%;
+}
+
+@media screen and (min-width: 800px) {
+  .picturelogo img {
+    max-width: 30%;
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  .picturelogo img {
+    max-width: 15%;
+  }
+}
+
+@media screen and (min-width: 1300px) {
+  .picturelogo img {
+    max-width: 15%;
+  }
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.box {
+  width: 200px;
+  height: 100px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.box.animate {
+  animation: scaleUp 0.5s ease-in-out;
+}
+
+.title0 {
+  font-size: 2.5rem;
+  text-align: center;
+  
+}
+
+.title1 {
+  padding-top: 15px;
+  font-size: 1.7rem;
+}
+
+.title2 {
+  padding: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+  font-family: "Sarabun", sans-serif;
+}
+
+@media screen and (max-width: 550px) {
+  .title {
+    font-size: 25px;
+  }
+
+  .title2 {
+    font-size: 25px;
+  }
+}
+
+.table {
+  font-family: "Sarabun", sans-serif;
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+}
+
+
+.box {
+  width: 150px;
+  height: 50px;
+  border: 0.5px black solid;
+  background-color: white;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+#table-container{
+  display: flex;
+  justify-content: center;
+  flex-wrap:wrap;
+}
+.reserved-text {
+  color: rgb(189, 186, 186);
+}
+
+
+

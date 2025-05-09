@@ -1,0 +1,138 @@
+body {
+  font-family: "Sarabun", sans-serif;
+}
+
+.ordered-title {
+  text-align: center;
+  font-size: 2rem;
+  color: white;
+  font-family: "Sarabun", sans-serif;
+}
+
+.ordered-items-list {
+  margin-bottom: 20px;
+}
+
+.no-order-message {
+  padding: 10px;
+}
+
+.ordered-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: "Sarabun", sans-serif;
+}
+
+.ordered-item-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.ordered-item-details {
+  flex-grow: 1;
+}
+
+.ordered-item-name {
+  font-size: 1.2rem;
+  color: black;
+  font-family: "Sarabun", sans-serif;
+  font-weight: bold;
+  padding-bottom: 10px;
+
+}
+
+.ordered-additional-note {
+  font-style: italic;
+  color: #888;
+}
+
+.order-summary {
+  margin-top: 20px;
+  text-align: right;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.total-price {
+  color: black;
+  padding: 10px;
+  text-align: center;
+
+}
+
+.total-quantities {
+  padding-left: 20px;
+  text-align: center
+}
+
+#alldiscount{
+  color:orange;
+}
+#finaltotalprice{
+  color:green;
+}
+
+.menu-ordered-actions {
+  text-align: center;
+  padding-bottom: 1cm;
+  display: flex;
+  justify-content: space-around;
+}
+
+.back-to-menu-btn,
+.callstaff {
+  background-color: darkgreen;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.takehomenote {
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 4px;
+  margin-bottom: 0;
+  text-align: left;
+  display: block;
+}
+#promotion-name{
+  font-weight:bold;
+  color:#e637c8;
+}
+#takehome {
+  color: red;
+}
+
+#dinein {
+  color: green;
+}
+
+.back-to-menu-btn:hover {
+  background-color: rgb(39, 136, 70);
+}
+
+.callstaff:hover {
+  background-color: rgb(39, 136, 70);
+}
+
+@media screen and (max-width: 600px) {
+
+  .back-to-menu-btn,
+  .callstaff {
+    font-size: 13px;
+    padding: 10px 10px;
+    margin: 15px;
+  }
+}
