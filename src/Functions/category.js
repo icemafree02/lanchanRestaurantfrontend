@@ -2,7 +2,7 @@
 
 //เมนูทั้งหมด
 export function showallmenu() {
-    fetch('https://lanchangbackend-production.up.railway.app/noodle')
+    fetch('http://localhost:3333/noodle')
         .then(response => response.json())
         .then(data => {
             const noodleContainer = document.getElementById('noodle-container');
@@ -14,7 +14,7 @@ export function showallmenu() {
                 
                 const pictureElement = document.createElement('img');
                 pictureElement.className = 'menu-picture';
-                pictureElement.src = `https://lanchangbackend-production.up.railway.app/noodleimage/${item.Noodle_menu_id}`;
+                pictureElement.src = `http://localhost:3333/noodleimage/${item.Noodle_menu_id}`;
                 pictureElement.alt = item.Noodle_menu_name;
                 noodleitem.appendChild(pictureElement);
 
@@ -32,7 +32,7 @@ export function showallmenu() {
         })
         .catch(error => console.error('Error:', error));
 
-    fetch('https://lanchangbackend-production.up.railway.app/menu')
+    fetch('http://localhost:3333/menu')
         .then(response => response.json())
         .then(data => {
             const menuContainer = document.getElementById('menu-container');
@@ -44,7 +44,7 @@ export function showallmenu() {
                 
                 const pictureElement = document.createElement('img');
                 pictureElement.className = 'menu-picture';
-                pictureElement.src = `https://lanchangbackend-production.up.railway.app/menuimage/${item.Menu_id}`;
+                pictureElement.src = `http://localhost:3333/menuimage/${item.Menu_id}`;
                 pictureElement.alt = item.Menu_name;
                 menuitem.appendChild(pictureElement);
 
@@ -66,7 +66,7 @@ export function showallmenu() {
 //น้ำตก
 
 function showNamTok() {
-    fetch('https://lanchangbackend-production.up.railway.app/namtok')
+    fetch('http://localhost:3333/namtok')
         .then(response => response.json())
         .then(data => {
 
@@ -84,7 +84,7 @@ function showNamTok() {
                     
                     const pictureElement = document.createElement('img');
                     pictureElement.className = 'menu-picture';
-                    pictureElement.src = `https://lanchangbackend-production.up.railway.app/noodleimage/${item.Noodle_menu_id}`;
+                    pictureElement.src = `http://localhost:3333/noodleimage/${item.Noodle_menu_id}`;
                     pictureElement.alt = item.Noodle_menu_name;
                     noodleitem.appendChild(pictureElement);
 
@@ -113,7 +113,7 @@ function showNamTok() {
 }
 
 function showNamSai() {
-    fetch('https://lanchangbackend-production.up.railway.app/namsai')
+    fetch('http://localhost:3333/namsai')
         .then(response => response.json())
         .then(data => {
 
@@ -131,7 +131,7 @@ function showNamSai() {
                     
                     const pictureElement = document.createElement('img');
                     pictureElement.className = 'menu-picture';
-                    pictureElement.src = `https://lanchangbackend-production.up.railway.app/noodleimage/${item.Noodle_menu_id}`;
+                    pictureElement.src = `http://localhost:3333/noodleimage/${item.Noodle_menu_id}`;
                     pictureElement.alt = item.Noodle_menu_name;
                     noodleitem.appendChild(pictureElement);
 
@@ -160,7 +160,7 @@ function showNamSai() {
 }
 
 function showdrynoodle() {
-    fetch('https://lanchangbackend-production.up.railway.app/drynoodle')
+    fetch('http://localhost:3333/drynoodle')
         .then(response => response.json())
         .then(data => {
 
@@ -178,7 +178,7 @@ function showdrynoodle() {
                     
                     const pictureElement = document.createElement('img');
                     pictureElement.className = 'menu-picture';
-                    pictureElement.src = `https://lanchangbackend-production.up.railway.app/noodleimage/${item.Noodle_menu_id}`;
+                    pictureElement.src = `http://localhost:3333/noodleimage/${item.Noodle_menu_id}`;
                     pictureElement.alt = item.Noodle_menu_name;
                     noodleitem.appendChild(pictureElement);
 
@@ -207,7 +207,7 @@ function showdrynoodle() {
 }
 
 function showBeverage() {
-    fetch('https://lanchangbackend-production.up.railway.app/menu')
+    fetch('http://localhost:3333/menu')
         .then(response => response.json())
         .then(data => {
             const menuContainer = document.getElementById('menu-container');
@@ -224,7 +224,7 @@ function showBeverage() {
                     
                     const pictureElement = document.createElement('img');
                     pictureElement.className = 'menu-picture';
-                    pictureElement.src = `https://lanchangbackend-production.up.railway.app/menuimage/${item.Menu_id}`;
+                    pictureElement.src = `http://localhost:3333/menuimage/${item.Menu_id}`;
                     pictureElement.alt = item.Menu_name;
                     menuItem.appendChild(pictureElement);
 
@@ -253,7 +253,7 @@ function showBeverage() {
 
 
 function showappetizer() {
-    fetch('https://lanchangbackend-production.up.railway.app/menu')
+    fetch('http://localhost:3333/menu')
         .then(response => response.json())
         .then(data => {
             const menuContainer = document.getElementById('menu-container');
@@ -270,7 +270,7 @@ function showappetizer() {
                     
                     const pictureElement = document.createElement('img');
                     pictureElement.className = 'menu-picture';
-                    pictureElement.src = `https://lanchangbackend-production.up.railway.app/menuimage/${item.Menu_id}`;
+                    pictureElement.src = `http://localhost:3333/menuimage/${item.Menu_id}`;
                     pictureElement.alt = item.Menu_name;
                     menuItem.appendChild(pictureElement);
 
@@ -298,7 +298,7 @@ function showappetizer() {
 }
 
 function showOthermenu() {
-    fetch('https://lanchangbackend-production.up.railway.app/menu')
+    fetch('http://localhost:3333/menu')
         .then(response => response.json())
         .then(data => {
             const menuContainer = document.getElementById('menu-container');
@@ -315,7 +315,7 @@ function showOthermenu() {
                     
                     const pictureElement = document.createElement('img');
                     pictureElement.className = 'menu-picture';
-                    pictureElement.src = `https://lanchangbackend-production.up.railway.app/menuimage/${item.Menu_id}`;
+                    pictureElement.src = `http://localhost:3333/menuimage/${item.Menu_id}`;
                     pictureElement.alt = item.Menu_name;
                     menuItem.appendChild(pictureElement);
 

@@ -26,7 +26,7 @@ const NoodleDetail = () => {
   const handleAddToCart = async () => {
     if (selectedNoodle) {
       try {
-        const response = await fetch('https://lanchangbackend-production.up.railway.app/addnoodletocart', {
+        const response = await fetch('http://localhost:3333/addnoodletocart', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ const NoodleDetail = () => {
         const data = await response.json();
         console.log('Added to cart:', data);
         dispatch(setCartItems(data.quantity));
-        navigate('/menu_order');
+        navigate(`/${selectedTable}/menu_order`);
       } catch (error) {
         console.error('Error adding to cart:', error);
       }
@@ -59,7 +59,7 @@ const NoodleDetail = () => {
 
   const fetchOrder = async() =>{
     try {
-      const response = await fetch(`https://lanchangbackend-production.up.railway.app/order/${selectedTable}`)
+      const response = await fetch(`http://localhost:3333/order/${selectedTable}`)
       const data = await response.json()
       setOrderId(data.Order_id)
     } catch (err) {
@@ -70,7 +70,7 @@ const NoodleDetail = () => {
   useEffect(() => {
     fetchOrder();
     if (!selectedNoodle) {
-      navigate('/menu_order');
+      navigate(`/${selectedTable}/menu_order`);
     }
   }, [selectedNoodle, navigate]);
 

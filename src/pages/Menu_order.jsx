@@ -5,12 +5,15 @@ import '../menu_order.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import lanchan from '../image/lanchan.png';
 import cart from '../image/cart.jpg';
-import {  fetchMenuItemDetail } from '../slice/menuslice';
+import { fetchMenuItemDetail } from '../slice/menuslice';
 import { setSelectedNoodle } from '../slice/noodleslice';
 import { setSelectedTable } from '../slice/tableslice';
+import { useParams } from 'react-router-dom';
 
 const MenuOrder = () => {
+  const { tablenumber } = useParams();
   const dispatch = useDispatch();
+  dispatch(setSelectedTable(tablenumber));
   const navigate = useNavigate();
   const selectedTable = useSelector(state => state.table.selectedTable);
   const [orderId, setOrderId] = useState(null);
@@ -30,23 +33,90 @@ const MenuOrder = () => {
   const [meats, setMeats] = useState([]);
   const [noodleTypes, setNoodleTypes] = useState([]);
   const [cartitems, setCartitems] = useState(0);
+  const [table, setTable] = useState('');
 
   useEffect(() => {
     fetchInitialMenu();
     fetchAllComponent();
     fetchOrder();
+    fetchTable();
   }, []);
-  
+
+  const getTotalCartItems = () => {
+    fetch(`http://localhost:3333/gettotalcartitems/${orderId}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log('Total cart items:', data.total_items);
+        setCartitems(data.total_items);
+      })
+      .catch(error => {
+        console.error('Error fetching total cart items:', error);
+        setCartitems(0);
+      });
+  };
+
+  console.log(cartitems)
+
   useEffect(() => {
     if (orderId) {
       getTotalCartItems();
     }
   }, [orderId]);
-  
 
-  const fetchOrder = async() =>{
+  useEffect(() => {
+    const storedTable = sessionStorage.getItem('selectedTable');
+    console.log("Retrieved from sessionStorage:", storedTable);
+
+    if (tablenumber) {
+      sessionStorage.setItem('selectedTable', tablenumber);
+      dispatch(setSelectedTable(Number(tablenumber)));
+      console.log("Stored and updated with:", tablenumber);
+    } else if (storedTable && Number(storedTable) !== selectedTable) {
+      dispatch(setSelectedTable(Number(storedTable)));
+      console.log("Restored Redux state from sessionStorage:", storedTable);
+    }
+  }, [tablenumber, dispatch, selectedTable]);
+
+  const fetchTable = async () => {
     try {
-      const response = await fetch(`https://lanchangbackend-production.up.railway.app/order/${selectedTable}`)
+      const response = await fetch(`http://localhost:3333/table/${selectedTable}`)
+      const data = await response.json();
+      setTable(data)
+    } catch (err) {
+      console.log('error get table')
+    }
+  }
+
+  if (table.status_id === 2) {
+    return (
+      <h2 style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        color: "red"
+      }}>
+        {`โต๊ะ ${selectedTable} ไม่พร้อมให้บริการ`}
+      </h2>
+    );
+  } else if (table.status_id === 0) {
+    return (
+      <h2 style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        color: "orange"
+      }}>
+        โต๊ะ {selectedTable} พนักงานกำลังเก็บโต๊ะ กรุณารอสักครู่
+      </h2>
+    );
+  }
+
+
+  const fetchOrder = async () => {
+    try {
+      const response = await fetch(`http://localhost:3333/order/${selectedTable}`)
       const data = await response.json()
       setOrderId(data.Order_id)
     } catch (err) {
@@ -56,7 +126,7 @@ const MenuOrder = () => {
 
   const fetchInitialMenu = async () => {
     try {
-      const response = await fetch('https://lanchangbackend-production.up.railway.app/menu');
+      const response = await fetch('http://localhost:3333/menu');
       const menuItems = await response.json();
       setFilteredItems({ noodles: [], menus: menuItems });
       setOriginalItems(menuItems);
@@ -66,24 +136,13 @@ const MenuOrder = () => {
     }
   };
 
-  useEffect(() => {
-    const storedTable = sessionStorage.getItem('tableNumber');
-    console.log("Retrieved from sessionStorage:", storedTable);
-  
-    if (storedTable && Number(storedTable) !== selectedTable) {
-      dispatch(setSelectedTable(Number(storedTable)));
-      console.log("Updated Redux state with:", Number(storedTable));
-    }
-  }, [dispatch, selectedTable]);
-  
-
   console.log("Current Redux state:", selectedTable);
 
 
   const handleMenuItemClick = (item) => {
     if (item.Menu_id) {
       dispatch(fetchMenuItemDetail(item.Menu_id))
-        .then(() => navigate('/menu_order/menu_detail'));
+        .then(() => navigate(`/${selectedTable}/menu_order/menu_detail`));
     }
   };
 
@@ -97,25 +156,11 @@ const MenuOrder = () => {
   };
 
   const handleCartClick = () => {
-    navigate('/menu_order/cart');
+    navigate(`/${selectedTable}/menu_order/cart`);
   };
 
   console.log(orderId)
 
-  const getTotalCartItems = () => {
-    fetch(`https://lanchangbackend-production.up.railway.app/gettotalcartitems/${orderId}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Total cart items:', data.total_items);
-        setCartitems(data.total_items);
-      })
-      .catch(error => {
-        console.error('Error fetching total cart items:', error);
-        setCartitems(0);
-      });
-  };
-
-  console.log(cartitems)
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -145,13 +190,13 @@ const MenuOrder = () => {
           let response;
           switch (category) {
             case 'beverage':
-              response = await fetch('https://lanchangbackend-production.up.railway.app/menu');
+              response = await fetch('http://localhost:3333/menu');
               break;
             case 'appetizer':
-              response = await fetch('https://lanchangbackend-production.up.railway.app/menu');
+              response = await fetch('http://localhost:3333/menu');
               break;
             case 'other':
-              response = await fetch('https://lanchangbackend-production.up.railway.app/menu');
+              response = await fetch('http://localhost:3333/menu');
               break;
             default:
               setFilteredItems({ noodles: [], menus: [] });
@@ -184,7 +229,7 @@ const MenuOrder = () => {
       setIsNoodleCustomization(false);
       setActiveCategory('all');
 
-      const response = await fetch('https://lanchangbackend-production.up.railway.app/menu');
+      const response = await fetch('http://localhost:3333/menu');
       const data = await response.json();
       setFilteredItems({ noodles: [], menus: data });
 
@@ -196,10 +241,10 @@ const MenuOrder = () => {
   const fetchAllComponent = async () => {
     try {
       const [soupRes, sizeRes, meatRes, noodleTypeRes] = await Promise.all([
-        fetch('https://lanchangbackend-production.up.railway.app/soups'),
-        fetch('https://lanchangbackend-production.up.railway.app/sizes'),
-        fetch('https://lanchangbackend-production.up.railway.app/meats'),
-        fetch('https://lanchangbackend-production.up.railway.app/noodletypes')
+        fetch('http://localhost:3333/soups'),
+        fetch('http://localhost:3333/sizes'),
+        fetch('http://localhost:3333/meats'),
+        fetch('http://localhost:3333/noodletypes')
       ]);
 
       const [soupData, sizeData, meatData, noodleTypeData] = await Promise.all([
@@ -298,7 +343,7 @@ const MenuOrder = () => {
       return;
     }
     try {
-      const response = await fetch('https://lanchangbackend-production.up.railway.app/noodle', {
+      const response = await fetch('http://localhost:3333/noodle', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -327,7 +372,7 @@ const MenuOrder = () => {
         console.log(NoodleHeld);
         await dispatch(setSelectedNoodle(NoodleHeld));
 
-        navigate('/menu_order/noodle_detail');
+        navigate(`/${selectedTable}/menu_order/noodle_detail`);
       } else {
         alert('ไม่พบเมนูที่เลือก');
       }
@@ -335,6 +380,10 @@ const MenuOrder = () => {
       console.error('Error searching for noodles:', error);
     }
   };
+
+  console.log(selectedTable)
+
+
 
   return (
     <div>
@@ -404,7 +453,7 @@ const MenuOrder = () => {
         {isNoodleCustomization ? renderNoodleCustomization() : (
           filteredItems.menus.map(item => (
             <div key={item.Menu_id} className="menu-item" onClick={() => handleMenuItemClick(item)}>
-              <img className="menu-picture" src={`https://lanchangbackend-production.up.railway.app/menuimage/${item.Menu_id}`} alt={item.Menu_name} />
+              <img className="menu-picture" src={`http://localhost:3333/menuimage/${item.Menu_id}`} alt={item.Menu_name} />
               <div className="menu-name">{item.Menu_name}</div>
               <div className="menu-price">{item.Menu_price} บาท</div>
             </div>

@@ -8,13 +8,13 @@ const initialState = {
   error: null,
 };
 export const fetchNoodles = createAsyncThunk('menuItems/fetchNoodles', async () => {
-  const response = await fetch('https://lanchangbackend-production.up.railway.app/noodle');
+  const response = await fetch('http://localhost:3333/noodle');
   if (!response.ok) throw new Error('Failed to fetch noodles');
   return response.json();
 });
 
 export const fetchMenu = createAsyncThunk('menuItems/fetchMenu', async () => {
-  const response = await fetch('https://lanchangbackend-production.up.railway.app/menu');
+  const response = await fetch('http://localhost:3333/menu');
   if (!response.ok) throw new Error('Failed to fetch menu');
   return response.json();
 });

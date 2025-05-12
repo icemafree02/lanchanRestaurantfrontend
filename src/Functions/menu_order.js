@@ -3,7 +3,7 @@ export function fetchNoodlesAndMenu() {
   const menuContainer = document.getElementById('menu-container');
 
   if (menuContainer) {
-    fetch('https://lanchangbackend-production.up.railway.app/menu')
+    fetch('http://localhost:3333/menu')
       .then(response => response.json())
       .then(data => {
         menuContainer.innerHTML = '';
@@ -14,7 +14,7 @@ export function fetchNoodlesAndMenu() {
 
           const pictureElement = document.createElement('img');
           pictureElement.className = 'menu-picture';
-          pictureElement.src = `https://lanchangbackend-production.up.railway.app/menuimage/${item.Menu_id}`;
+          pictureElement.src = `http://localhost:3333/menuimage/${item.Menu_id}`;
           pictureElement.alt = item.Menu_name;
           menuItem.appendChild(pictureElement);
 

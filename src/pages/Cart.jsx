@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setOrderId, setCartItems } from '../slice/cartslice';
 import '../cart.css';
 import noodle from '../image/noodle.png';
 
@@ -14,7 +13,7 @@ const Cart = () => {
 
   const fetchOrder = async () => {
     try {
-      const response = await fetch(`https://lanchangbackend-production.up.railway.app/order/${selectedTable}`)
+      const response = await fetch(`http://localhost:3333/order/${selectedTable}`)
       const data = await response.json()
       setOrderId(data.Order_id)
     } catch (err) {
@@ -38,7 +37,7 @@ const Cart = () => {
 
   const getCartItems = async () => {
     try {
-      const response = await fetch(`https://lanchangbackend-production.up.railway.app/cart/${orderId}`, {
+      const response = await fetch(`http://localhost:3333/cart/${orderId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +54,7 @@ const Cart = () => {
   };
 
   const getTotalCartItems = () => {
-    fetch(`https://lanchangbackend-production.up.railway.app/gettotalcartitems/${orderId}`)
+    fetch(`http://localhost:3333/gettotalcartitems/${orderId}`)
       .then(response => response.json())
       .then(data => {
         console.log('Total cart items:', data.total_items);
@@ -71,12 +70,12 @@ const Cart = () => {
     if (!item.Menu_id) {
       return noodle;
     }
-    return `https://lanchangbackend-production.up.railway.app/menuimage/${item.Menu_id}`;
+    return `http://localhost:3333/menuimage/${item.Menu_id}`;
   };
 
   const handleIncrease = async (item) => {
     try {
-      const response = await fetch(`https://lanchangbackend-production.up.railway.app/cart/increase/${item.Cart_id}`, {
+      const response = await fetch(`http://localhost:3333/cart/increase/${item.Cart_id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -97,7 +96,7 @@ const Cart = () => {
   const handleDecrease = async (item) => {
     if (item.Quantity > 1) {
       try {
-        const response = await fetch(`https://lanchangbackend-production.up.railway.app/cart/decrease/${item.Cart_id}`, {
+        const response = await fetch(`http://localhost:3333/cart/decrease/${item.Cart_id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -119,7 +118,7 @@ const Cart = () => {
 
   const handleRemove = async (item) => {
     try {
-      const response = await fetch(`https://lanchangbackend-production.up.railway.app/cart/delete/${item.Cart_id}`, {
+      const response = await fetch(`http://localhost:3333/cart/delete/${item.Cart_id}`, {
         method: 'DELETE',
       });
 
@@ -135,7 +134,7 @@ const Cart = () => {
 
   const OrderMenu = async () => {
     try {
-      const url = `https://lanchangbackend-production.up.railway.app/orders/${orderId}/add_items`;
+      const url = `http://localhost:3333/orders/${orderId}/add_items`;
       const response = await fetch(url, {
         method: 'PUT',
         headers: {
@@ -162,7 +161,7 @@ const Cart = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      navigate('/menu_order/cart/menu_ordered');
+      navigate(`/${selectedTable}/menu_order/cart/menu_ordered`);
       DeleteOrderItem();
     } catch (error) {
       console.error('Error processing order:', error);
@@ -172,7 +171,7 @@ const Cart = () => {
 
   const DeleteOrderItem = async () => {
     try {
-      const response = await fetch(`https://lanchangbackend-production.up.railway.app/cart/order/${orderId}`, {
+      const response = await fetch(`http://localhost:3333/cart/order/${orderId}`, {
         method: 'DELETE',
       });
 
@@ -229,7 +228,7 @@ const Cart = () => {
         )}
       </div>
       <div className='center'>
-        <button className="view-ordered-btn" onClick={() => navigate('/menu_order/cart/menu_ordered')}>ดูรายการที่สั่ง</button>
+        <button className="view-ordered-btn" onClick={() => navigate(`/${selectedTable}/menu_order/cart/menu_ordered`)}>ดูรายการที่สั่ง</button>
       </div>
     </div>
   );
