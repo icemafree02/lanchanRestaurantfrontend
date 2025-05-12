@@ -16,7 +16,7 @@ const MenuDetail = () => {
 
   const fetchOrder = async() =>{
     try {
-      const response = await fetch(`http://localhost:3333/order/${selectedTable}`)
+      const response = await fetch(`https://lanchangbackend-production.up.railway.app/order/${selectedTable}`)
       const data = await response.json()
       setOrderId(data.Order_id)
     } catch (err) {
@@ -35,7 +35,7 @@ const MenuDetail = () => {
   const handleAddToCart = async () => {
     if (selectedMenu) {
       try {
-        const response = await fetch('http://localhost:3333/addmenutocart', {
+        const response = await fetch('https://lanchangbackend-production.up.railway.app/addmenutocart', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const MenuDetail = () => {
             <div>
               <img
                 className="picture-detail"
-                src={`http://localhost:3333/menuimage/${selectedMenu.Menu_id}`}
+                src={`https://lanchangbackend-production.up.railway.app/menuimage/${selectedMenu.Menu_id}`}
                 alt={selectedMenu.Menu_name}
               />
               <h2 className="title">{selectedMenu.Menu_name}</h2>

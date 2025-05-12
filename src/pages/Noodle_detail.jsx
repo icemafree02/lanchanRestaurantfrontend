@@ -26,7 +26,7 @@ const NoodleDetail = () => {
   const handleAddToCart = async () => {
     if (selectedNoodle) {
       try {
-        const response = await fetch('http://localhost:3333/addnoodletocart', {
+        const response = await fetch('https://lanchangbackend-production.up.railway.app/addnoodletocart', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ const NoodleDetail = () => {
 
   const fetchOrder = async() =>{
     try {
-      const response = await fetch(`http://localhost:3333/order/${selectedTable}`)
+      const response = await fetch(`https://lanchangbackend-production.up.railway.app/order/${selectedTable}`)
       const data = await response.json()
       setOrderId(data.Order_id)
     } catch (err) {

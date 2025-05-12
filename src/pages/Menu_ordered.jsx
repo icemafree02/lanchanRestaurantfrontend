@@ -43,7 +43,7 @@ const MenuOrdered = () => {
 
   const fetchOrder = async() =>{
     try {
-      const response = await fetch(`http://localhost:3333/order/${selectedTable}`)
+      const response = await fetch(`https://lanchangbackend-production.up.railway.app/order/${selectedTable}`)
       const data = await response.json()
       console.log(data.Order_id);
       setOrderId(data.Order_id);
@@ -54,7 +54,7 @@ const MenuOrdered = () => {
 
   const fetchOrderDetails = async () => {
     try {
-      const response = await fetch(`http://localhost:3333/orders/${orderId}`);
+      const response = await fetch(`https://lanchangbackend-production.up.railway.app/orders/${orderId}`);
       if (!response.ok) {
         throw new Error(`Failed to fetch order details: ${response.status}`);
       }
@@ -80,12 +80,12 @@ const MenuOrdered = () => {
   // Updated function to fetch promotions with requirements
   const fetchPromotions = async () => {
     try {
-      const res = await fetch('http://localhost:3333/getactivepromotions');
+      const res = await fetch('https://lanchangbackend-production.up.railway.app/getactivepromotions');
       const activePromos = await res.json();
 
       const promosWithItems = await Promise.all(
         activePromos.map(async (promo) => {
-          const itemsRes = await fetch(`http://localhost:3333/getpromotionitems/${promo.Promotion_id}`);
+          const itemsRes = await fetch(`https://lanchangbackend-production.up.railway.app/getpromotionitems/${promo.Promotion_id}`);
           const items = await itemsRes.json();
 
           // Group promotion items by category for combo detection
@@ -115,7 +115,7 @@ const MenuOrdered = () => {
   };
 
   const getTotalCartItems = () => {
-    fetch(`http://localhost:3333/gettotalcountorderdetail/${orderId}`)
+    fetch(`https://lanchangbackend-production.up.railway.app/gettotalcountorderdetail/${orderId}`)
       .then(response => response.json())
       .then(data => {
         setTotalItems(data.Total_items);
@@ -130,7 +130,7 @@ const MenuOrdered = () => {
 
   const callStaff = async () => {
     try {
-      const response = await fetch(`http://localhost:3333/orders/${orderId}/callstaff`, {
+      const response = await fetch(`https://lanchangbackend-production.up.railway.app/orders/${orderId}/callstaff`, {
         method: 'PUT',
       });
 
@@ -268,7 +268,7 @@ const MenuOrdered = () => {
           return (
             <div key={item.Order_detail_id} className="ordered-item">
               <img
-                src={item.Menu_id ? `http://localhost:3333/menuimage/${item.Menu_id}` : noodle}
+                src={item.Menu_id ? `https://lanchangbackend-production.up.railway.app/menuimage/${item.Menu_id}` : noodle}
                 alt={itemName}
                 className="ordered-item-image"
               />

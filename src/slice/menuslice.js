@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchMenuData = createAsyncThunk(
   'menu/fetchMenuData',
   async () => {
-    const response = await fetch('http://localhost:3333/menu');
+    const response = await fetch('https://lanchangbackend-production.up.railway.app/menu');
     if (!response.ok) throw new Error('Failed to fetch menu data');
     return response.json();
   }
@@ -12,7 +12,7 @@ export const fetchMenuData = createAsyncThunk(
 export const fetchMenuItemDetail = createAsyncThunk(
   'menu/fetchMenuItemDetail',
   async (menuId) => {
-    const response = await fetch(`http://localhost:3333/menu/${menuId}`);
+    const response = await fetch(`https://lanchangbackend-production.up.railway.app/menu/${menuId}`);
     if (!response.ok) throw new Error('Failed to fetch menu item detail');
     return response.json();
   }

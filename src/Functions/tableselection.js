@@ -9,7 +9,7 @@ export function useTableSelection() {
   const fetchTableData = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:3333/table');
+      const response = await fetch('https://lanchangbackend-production.up.railway.app/table');
       if (!response.ok) throw new Error('Failed to fetch table data');
       const data = await response.json();
       setTables(data);  // เก็บข้อมูลโต๊ะใน state
