@@ -7,7 +7,7 @@ import { useMemo } from 'react';
 import { setSelectedTable } from '../slice/tableslice';
 
 const MenuOrdered = () => {
-  const [table ,setTable ] = useState('')
+  const [table, setTable] = useState('')
   const [orderDetails, setOrderDetails] = useState([]);
   const [promotions, setPromotions] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -20,16 +20,16 @@ const MenuOrdered = () => {
   useEffect(() => {
     const storedTable = sessionStorage.getItem('selectedTable');
     console.log("Retrieved from sessionStorage:", storedTable);
-  
+
     if (storedTable && Number(storedTable) !== selectedTable) {
       dispatch(setSelectedTable(Number(storedTable)));
       console.log("Updated Redux state with:", Number(storedTable));
     }
   }, [dispatch, selectedTable]);
-  
+
   useEffect(() => {
     if (selectedTable) {
-      fetchOrder(); 
+      fetchOrder();
     }
   }, [selectedTable]);
 
@@ -41,9 +41,93 @@ const MenuOrdered = () => {
       fetchTable();
     }
   }, [orderId]);
-  
 
-  const fetchOrder = async() =>{
+  useEffect(() => {
+    if (orderDetails.length === 0 || promotions.length === 0) return;
+
+    const promoMap = {};
+
+    const availableItems = [...orderDetails.map(item => ({ ...item, used: false }))];
+
+    promotions.forEach(promo => {
+      const requiredItemTypes = Object.keys(promo.itemsByType || {});
+      let combosFound = 0;
+      let keepChecking = true;
+
+      while (keepChecking) {
+        const comboItems = [];
+        let comboComplete = true;
+
+        for (const itemType of requiredItemTypes) {
+          const foundItem = availableItems.find(item => {
+            if (item.used) return false;
+
+            if (itemType.startsWith('menu_')) {
+              const menuId = parseInt(itemType.split('_')[1]);
+              return item.Menu_id === menuId;
+            } else if (itemType === 'noodle') {
+              return item.Menu_id === null;
+            }
+            return false;
+          });
+
+          if (foundItem) {
+            comboItems.push(foundItem);
+          } else {
+            comboComplete = false;
+            break;
+          }
+        }
+
+        if (comboComplete && comboItems.length === requiredItemTypes.length) {
+          comboItems.forEach(item => {
+            const index = availableItems.findIndex(i => i.Order_detail_id === item.Order_detail_id);
+            if (index !== -1) {
+              availableItems[index].used = true;
+              promoMap[item.Order_detail_id] = promo;
+            }
+          });
+
+          combosFound++;
+        } else {
+          keepChecking = false;
+        }
+      }
+    });
+
+    setItemPromoMap(promoMap);
+  }, [orderDetails, promotions]);
+
+  const { totalFullPrice, totalDiscount, finalPrice } = useMemo(() => {
+    let fullPrice = 0;
+    let discount = 0;
+
+    orderDetails.forEach(item => {
+      const itemQty = item.Order_detail_quantity;
+      const unitPrice = item.Order_detail_price;
+      fullPrice += unitPrice * itemQty;
+    });
+
+    const promoCount = {};
+    Object.values(itemPromoMap).forEach(promo => {
+      promoCount[promo.Promotion_id] = (promoCount[promo.Promotion_id] || 0) + 1;
+    });
+
+    promotions.forEach(promo => {
+      const itemTypesCount = Object.keys(promo.itemsByType || {}).length;
+      const matchedItems = promoCount[promo.Promotion_id] || 0;
+      const fullCombos = Math.floor(matchedItems / itemTypesCount);
+      discount += fullCombos * promo.Discount_value;
+    });
+
+    return {
+      totalFullPrice: fullPrice,
+      totalDiscount: discount,
+      finalPrice: fullPrice - discount
+    };
+  }, [orderDetails, promotions, itemPromoMap]);
+
+  const fetchOrder = async () => {
     try {
       const response = await fetch(`https://lanchangbackend-production.up.railway.app/order/${selectedTable}`)
       const data = await response.json()
@@ -192,92 +276,6 @@ const MenuOrdered = () => {
   const getPromotionForItem = (item) => {
     return itemPromoMap[item.Order_detail_id] || null;
   };
-
-  useEffect(() => {
-    if (orderDetails.length === 0 || promotions.length === 0) return;
-
-    const promoMap = {};
-
-    const availableItems = [...orderDetails.map(item => ({ ...item, used: false }))];
-
-    promotions.forEach(promo => {
-      const requiredItemTypes = Object.keys(promo.itemsByType || {});
-      let combosFound = 0;
-      let keepChecking = true;
-
-      while (keepChecking) {
-        const comboItems = [];
-        let comboComplete = true;
-
-        for (const itemType of requiredItemTypes) {
-          const foundItem = availableItems.find(item => {
-            if (item.used) return false;
-
-            if (itemType.startsWith('menu_')) {
-              const menuId = parseInt(itemType.split('_')[1]);
-              return item.Menu_id === menuId;
-            } else if (itemType === 'noodle') {
-              return item.Menu_id === null;
-            }
-            return false;
-          });
-
-          if (foundItem) {
-            comboItems.push(foundItem);
-          } else {
-            comboComplete = false;
-            break;
-          }
-        }
-
-        if (comboComplete && comboItems.length === requiredItemTypes.length) {
-          comboItems.forEach(item => {
-            const index = availableItems.findIndex(i => i.Order_detail_id === item.Order_detail_id);
-            if (index !== -1) {
-              availableItems[index].used = true;
-              promoMap[item.Order_detail_id] = promo;
-            }
-          });
-
-          combosFound++;
-        } else {
-          keepChecking = false;
-        }
-      }
-    });
-
-    setItemPromoMap(promoMap);
-  }, [orderDetails, promotions]);
-
-  const { totalFullPrice, totalDiscount, finalPrice } = useMemo(() => {
-    let fullPrice = 0;
-    let discount = 0;
-
-    orderDetails.forEach(item => {
-      const itemQty = item.Order_detail_quantity;
-      const unitPrice = item.Order_detail_price;
-      fullPrice += unitPrice * itemQty;
-    });
-
-    const promoCount = {};
-    Object.values(itemPromoMap).forEach(promo => {
-      promoCount[promo.Promotion_id] = (promoCount[promo.Promotion_id] || 0) + 1;
-    });
-
-    promotions.forEach(promo => {
-      const itemTypesCount = Object.keys(promo.itemsByType || {}).length;
-      const matchedItems = promoCount[promo.Promotion_id] || 0;
-      const fullCombos = Math.floor(matchedItems / itemTypesCount);
-      discount += fullCombos * promo.Discount_value;
-    });
-
-    return {
-      totalFullPrice: fullPrice,
-      totalDiscount: discount,
-      finalPrice: fullPrice - discount
-    };
-  }, [orderDetails, promotions, itemPromoMap]);
-
 
   return (
     <div className="menu-ordered-container">

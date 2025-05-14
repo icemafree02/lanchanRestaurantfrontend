@@ -16,6 +16,14 @@ const NoodleDetail = () => {
   const [additionalInfo, setAdditionalInfo] = useState('');
   const selectedTable = useSelector(state => state.table.selectedTable);
 
+  useEffect(() => {
+    fetchOrder();
+    if (!selectedNoodle) {
+      navigate(`/${selectedTable}/menu_order`);
+    }
+    fetchTable();
+  }, [selectedNoodle, navigate]);
+
   const handleQuantityChange = (amount) => {
     setQuantity(prevQuantity => Math.max(prevQuantity + amount, 1));
   };
@@ -103,15 +111,6 @@ const NoodleDetail = () => {
       </h2>
     );
   }
-
-  useEffect(() => {
-    fetchOrder();
-    if (!selectedNoodle) {
-      navigate(`/${selectedTable}/menu_order`);
-    }
-    fetchTable();
-  }, [selectedNoodle, navigate]);
-
   
   return (
     <div>

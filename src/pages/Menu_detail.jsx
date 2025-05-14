@@ -15,6 +15,14 @@ const MenuDetail = () => {
   const [additionalInfo, setAdditionalInfo] = useState('');
   const selectedTable = useSelector(state => state.table.selectedTable);
 
+    useEffect(() => {
+    fetchOrder();
+    if (!selectedMenu) {
+      navigate(`/${selectedTable}/menu_order`);
+      fetchTable();
+    }
+  }, [selectedMenu, navigate]);
+
   const fetchOrder = async() =>{
     try {
       const response = await fetch(`https://lanchangbackend-production.up.railway.app/order/${selectedTable}`)
@@ -104,13 +112,6 @@ const MenuDetail = () => {
     }
   };
 
-  useEffect(() => {
-    fetchOrder();
-    if (!selectedMenu) {
-      navigate(`/${selectedTable}/menu_order`);
-      fetchTable();
-    }
-  }, [selectedMenu, navigate]);
 
   return (
     <div>

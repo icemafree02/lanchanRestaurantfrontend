@@ -12,6 +12,17 @@ const Cart = () => {
   const selectedTable = useSelector(state => state.table.selectedTable);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    fetchOrder();
+  })
+  useEffect(() => {
+    if (orderId) {
+      getCartItems();
+      getTotalCartItems();
+      fetchTable();
+    }
+  }, [orderId]);
+
   const fetchOrder = async () => {
     try {
       const response = await fetch(`https://lanchangbackend-production.up.railway.app/order/${selectedTable}`)
@@ -57,17 +68,6 @@ const Cart = () => {
       </h2>
     );
   }
-
-  useEffect(() => {
-    fetchOrder();
-  })
-  useEffect(() => {
-    if (orderId) {
-      getCartItems();
-      getTotalCartItems();
-      fetchTable();
-    }
-  }, [orderId]);
 
   const getTotalPrice = () => {
     return cartItems.reduce((total, item) => total + item.Price * item.Quantity, 0);
