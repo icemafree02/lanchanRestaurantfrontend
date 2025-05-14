@@ -109,6 +109,7 @@ const NoodleDetail = () => {
     if (!selectedNoodle) {
       navigate(`/${selectedTable}/menu_order`);
     }
+    fetchTable();
   }, [selectedNoodle, navigate]);
 
   
