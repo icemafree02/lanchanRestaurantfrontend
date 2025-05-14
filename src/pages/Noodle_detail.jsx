@@ -6,6 +6,7 @@ import noodle from '../image/noodle.png';
 import {setCartItems } from '../slice/cartslice';
 
 const NoodleDetail = () => {
+  const [table ,setTable ] = useState('')
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const selectedNoodle = useSelector(state => state.noodle.selectedItem);
@@ -65,6 +66,42 @@ const NoodleDetail = () => {
     } catch (err) {
       console.log('error geting order')
     }
+  }
+
+  const fetchTable = async () => {
+    try {
+      const response = await fetch(`https://lanchangbackend-production.up.railway.app/table/${selectedTable}`)
+      const data = await response.json();
+      setTable(data)
+    } catch (err) {
+      console.log('error get table')
+    }
+  }
+
+  if (table.status_id === 2) {
+    return (
+      <h2 style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        color: "red"
+      }}>
+        {`โต๊ะ ${selectedTable} ไม่พร้อมให้บริการ`}
+      </h2>
+    );
+  } else if (table.status_id === 0) {
+    return (
+      <h2 style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        color: "orange"
+      }}>
+        โต๊ะ {selectedTable} พนักงานกำลังเก็บโต๊ะ กรุณารอสักครู่
+      </h2>
+    );
   }
 
   useEffect(() => {
