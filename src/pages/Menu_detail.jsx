@@ -35,6 +35,8 @@ const MenuDetail = () => {
     }
   }
 
+  console.log(table)
+
   if (table.status_id === 2) {
     return (
       <h2 style={{
